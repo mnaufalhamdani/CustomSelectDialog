@@ -40,6 +40,7 @@
         android:layout_below="@id/etSearch"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:background="@color/grey_300" />
 
     <LinearLayout
@@ -77,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@id/lytSelectAll"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:background="@color/grey_400" />
 
     <androidx.recyclerview.widget.RecyclerView
