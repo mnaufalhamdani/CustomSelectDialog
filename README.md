@@ -2,8 +2,8 @@
 
 Custom Select Dialog is a dialog for selecting certain items that have been set, including:
 
-- **[SingleSelectDialog]**: The single select dialog is used to select only one item, and can be reset.
-- **[MultipleSelectDialog]**: The multiple select dialog is used to select more than one item or even all of them, and can be reset.
+- **SingleSelectDialog**: The single select dialog is used to select only one item, and can be reset.
+- **MultipleSelectDialog**: The multiple select dialog is used to select more than one item or even all of them, and can be reset.
 
 # Preview
    Main Sample    |  Single Select Dialog  |  Multiple Select Dialog  |
