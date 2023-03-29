@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -40,35 +41,39 @@ class MultipleSelectItem(
     inner class MyViewHolder(private val viewBinding: ItemMultipleSelectBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(model: MultipleSelectItemDomain, position: Int) {
-            viewBinding.apply {
-                checkBox.isChecked = model.isChecked
+            try {
+                viewBinding.apply {
+                    checkBox.isChecked = model.isChecked
 
-                val message = model.message
-                if (!searchQuery.isNullOrBlank()) {
-                    val spannable = SpannableString(message)
-                    val endLength: Int = message.lowercase()
-                        .indexOf(searchQuery.toString()) + searchQuery.toString().length
-                    val highlightedColor = ColorStateList(
-                        arrayOf(intArrayOf()),
-                        intArrayOf(ContextCompat.getColor(this.root.context, R.color.black))
-                    )
-                    val textAppearanceSpan =
-                        TextAppearanceSpan(null, Typeface.NORMAL, -1, highlightedColor, null)
-                    spannable.setSpan(
-                        textAppearanceSpan,
-                        message.lowercase().indexOf(searchQuery.toString()),
-                        endLength,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    tvItem.text = spannable
-                } else tvItem.text = message
+                    val message = model.message
+                    if (!searchQuery.isNullOrBlank()) {
+                        val spannable = SpannableString(message)
+                        val endLength: Int = message.lowercase()
+                            .indexOf(searchQuery.toString()) + searchQuery.toString().length
+                        val highlightedColor = ColorStateList(
+                            arrayOf(intArrayOf()),
+                            intArrayOf(ContextCompat.getColor(this.root.context, R.color.black))
+                        )
+                        val textAppearanceSpan =
+                            TextAppearanceSpan(null, Typeface.NORMAL, -1, highlightedColor, null)
+                        spannable.setSpan(
+                            textAppearanceSpan,
+                            message.lowercase().indexOf(searchQuery.toString()),
+                            endLength,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        tvItem.text = spannable
+                    } else tvItem.text = message
 
-                //TESTING
-                item.setOnClickListener {
-                    checkBox.isChecked = !checkBox.isChecked
-                    model.isChecked = checkBox.isChecked
-                    listener.invoke(position, model)
+                    //TESTING
+                    item.setOnClickListener {
+                        checkBox.isChecked = !checkBox.isChecked
+                        model.isChecked = checkBox.isChecked
+                        listener.invoke(position, model)
+                    }
                 }
+            }catch (e: Exception){
+                Log.e("error:", e.message.toString())
             }
         }
     }
