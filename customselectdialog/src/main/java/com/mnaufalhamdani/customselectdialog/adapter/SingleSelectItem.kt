@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -40,30 +41,34 @@ class SingleSelectItem(
     inner class MyViewHolder(private val viewBinding: ItemSingleSelectBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(model: SingleSelectItemDomain, position: Int) {
-            viewBinding.apply {
-                val message = model.message
-                if (!searchQuery.isNullOrBlank()) {
-                    val spannable = SpannableString(message)
-                    val endLength: Int = message.lowercase()
-                        .indexOf(searchQuery.toString()) + searchQuery.toString().length
-                    val highlightedColor = ColorStateList(
-                        arrayOf(intArrayOf()),
-                        intArrayOf(ContextCompat.getColor(this.root.context, R.color.black))
-                    )
-                    val textAppearanceSpan =
-                        TextAppearanceSpan(null, Typeface.NORMAL, -1, highlightedColor, null)
-                    spannable.setSpan(
-                        textAppearanceSpan,
-                        message.lowercase().indexOf(searchQuery.toString()),
-                        endLength,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    tvItem.text = spannable
-                } else tvItem.text = message
+            try {
+                viewBinding.apply {
+                    val message = model.message
+                    if (!searchQuery.isNullOrBlank()) {
+                        val spannable = SpannableString(message)
+                        val endLength: Int = message.lowercase()
+                            .indexOf(searchQuery.toString()) + searchQuery.toString().length
+                        val highlightedColor = ColorStateList(
+                            arrayOf(intArrayOf()),
+                            intArrayOf(ContextCompat.getColor(this.root.context, R.color.black))
+                        )
+                        val textAppearanceSpan =
+                            TextAppearanceSpan(null, Typeface.NORMAL, -1, highlightedColor, null)
+                        spannable.setSpan(
+                            textAppearanceSpan,
+                            message.lowercase().indexOf(searchQuery.toString()),
+                            endLength,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        tvItem.text = spannable
+                    } else tvItem.text = message
 
-                item.setOnClickListener {
-                    listener.invoke(position, model)
+                    item.setOnClickListener {
+                        listener.invoke(position, model)
+                    }
                 }
+            }catch (e: Exception){
+                Log.e("error:", e.message.toString())
             }
         }
     }
