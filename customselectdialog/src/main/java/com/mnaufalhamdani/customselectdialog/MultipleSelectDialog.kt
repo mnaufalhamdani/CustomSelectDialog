@@ -91,7 +91,7 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
                 }
                 callback.onSelected(
                     listData,
-                    codeOrId.substring(0, codeOrId.length - 2).trim(),
+                    codeOrId.substring(0, codeOrId.length - 1).trim(),
                     message.substring(0, message.length - 2)
                 )
                 hideDialog()
