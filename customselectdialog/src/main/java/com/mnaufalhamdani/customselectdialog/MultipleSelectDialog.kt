@@ -86,12 +86,12 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
                 var codeOrId = ""
                 var message = ""
                 listData.map {
-                    codeOrId += "${it.codeOrId}, "
+                    codeOrId += "${it.codeOrId},"
                     message += "${it.message}, "
                 }
                 callback.onSelected(
                     listData,
-                    codeOrId.substring(0, codeOrId.length - 2),
+                    codeOrId.substring(0, codeOrId.length - 2).trim(),
                     message.substring(0, message.length - 2)
                 )
                 hideDialog()
