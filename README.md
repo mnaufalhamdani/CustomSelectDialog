@@ -23,7 +23,7 @@ Custom Select Dialog is a dialog for selecting certain items that have been set,
 	```
 
     ```groovy
-   implementation 'com.github.mnaufalhamdani:customselectdialog:1.0.3'
+   implementation 'com.github.mnaufalhamdani:customselectdialog:1.0.4'
     ```
 
 
