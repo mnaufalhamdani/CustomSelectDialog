@@ -20,6 +20,7 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
     private var title: String = "Choose Multiple Item"
     private var isHiddenSearch: Boolean = false
     private var isCancel: Boolean = true
+    private var isHiddenSelectAll: Boolean = false
     private lateinit var callback: SubmitCallbackListener
 
     fun listItem(listItem: MutableList<MultipleSelectItemDomain>): MultipleSelectDialog {
@@ -44,6 +45,11 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
 
     fun setCancelButton(isCancel: Boolean): MultipleSelectDialog {
         this.isCancel = isCancel
+        return this
+    }
+
+    fun setHiddenSelectAll(isHiddenSelectAll: Boolean): MultipleSelectDialog {
+        this.isHiddenSelectAll = isHiddenSelectAll
         return this
     }
 
@@ -101,6 +107,10 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
         if (isHiddenSearch) {
             binding.etSearch.visibility = View.GONE
             binding.viewSearch.visibility = View.GONE
+        }
+
+        if (isHiddenSelectAll) {
+            binding.lytSelectAll.visibility = View.GONE
         }
 
         if (listItem.isNotEmpty()) {
