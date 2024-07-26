@@ -2,7 +2,9 @@ package com.mnaufalhamdani.customselectdialog
 
 import android.app.Dialog
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.widget.doAfterTextChanged
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mnaufalhamdani.customselectdialog.adapter.SingleSelectItem
 import com.mnaufalhamdani.customselectdialog.databinding.LytSingleSelectBinding
 import com.mnaufalhamdani.customselectdialog.domain.SingleSelectItemDomain
+
 
 class SingleSelectDialog(context: Context) : AppCompatDialog(context) {
     private lateinit var binding: LytSingleSelectBinding
@@ -63,18 +66,18 @@ class SingleSelectDialog(context: Context) : AppCompatDialog(context) {
 
     private fun showDialog() {
         if (dialog == null) dialog = Dialog(context)
+        binding = LytSingleSelectBinding.inflate(LayoutInflater.from(context))
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        binding = LytSingleSelectBinding.inflate(layoutInflater)
         dialog?.setContentView(binding.root)
         dialog?.setCancelable(isCancel)
         dialog?.setCanceledOnTouchOutside(false)
+        dialog?.window?.setBackgroundDrawableResource(R.color.transparent)
         dialog?.show()
 
         binding.tvTitle.text = title
         if (isShowEmptyButton) {
-            binding.viewDividerEmpty.visibility = View.VISIBLE
-            binding.tvReset.visibility = View.VISIBLE
-            binding.tvReset.setOnClickListener {
+            binding.btnReset.visibility = View.VISIBLE
+            binding.btnReset.setOnClickListener {
                 callback.onReset()
                 hideDialog()
             }
@@ -82,16 +85,23 @@ class SingleSelectDialog(context: Context) : AppCompatDialog(context) {
 
         if (isHiddenSearch) {
             binding.etSearch.visibility = View.GONE
-            binding.viewSearch.visibility = View.GONE
         }
 
         if (listItem.isNotEmpty()) {
+            val sizeScreen = context.resources.displayMetrics
+            val maxHeight = sizeScreen.heightPixels / 2
+            val heightSpan = if (listItem.size > 4) maxHeight else ViewGroup.LayoutParams.WRAP_CONTENT
+
             listItem.mapIndexed { index, domain ->
                 domain.index = index
                 domain
             }
 
             binding.recycler.apply {
+                val sizeRecycler = this.layoutParams
+                sizeRecycler.height = heightSpan
+                this.layoutParams = sizeRecycler
+
                 hasFixedSize()
                 layoutManager = LinearLayoutManager(binding.root.context)
                 _itemAdapter.setItems(listItem)
@@ -104,17 +114,25 @@ class SingleSelectDialog(context: Context) : AppCompatDialog(context) {
                     listItemSearch.addAll(listItem)
                 } else {
                     listItem.mapIndexed { index, it ->
-                        if (it.message.lowercase().trim()
+                        if (it.title.lowercase().trim()
                                 .contains(search.toString().lowercase().trim())
+                            || it.message?.lowercase()?.trim()
+                                ?.contains(search.toString().lowercase().trim()) == true
                         ) {
                             it.index = index
                             listItemSearch.add(it)
                         }
-                        it
                     }
                 }
 
-                _itemAdapter.setItems(listItemSearch, search.toString().ifEmpty { null })
+                if (listItemSearch.isNotEmpty()){
+                    binding.recycler.visibility = View.VISIBLE
+                    binding.lytError.visibility = View.GONE
+                    _itemAdapter.setItems(listItemSearch, search.toString().ifEmpty { null })
+                }else{
+                    binding.recycler.visibility = View.GONE
+                    binding.lytError.visibility = View.VISIBLE
+                }
             }
         } else {
             callback.onError("Data Not Found")

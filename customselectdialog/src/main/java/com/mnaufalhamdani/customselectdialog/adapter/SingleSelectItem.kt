@@ -1,19 +1,14 @@
 package com.mnaufalhamdani.customselectdialog.adapter
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.TextAppearanceSpan
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.mnaufalhamdani.customselectdialog.R
 import com.mnaufalhamdani.customselectdialog.databinding.ItemSingleSelectBinding
 import com.mnaufalhamdani.customselectdialog.domain.SingleSelectItemDomain
+
 
 @SuppressLint("NotifyDataSetChanged")
 class SingleSelectItem(
@@ -21,7 +16,6 @@ class SingleSelectItem(
 ) : RecyclerView.Adapter<SingleSelectItem.MyViewHolder>() {
 
     private val listData: MutableList<SingleSelectItemDomain> = mutableListOf()
-    private val listDataTemp: MutableList<SingleSelectItemDomain> = mutableListOf()
     private var searchQuery: String? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -43,25 +37,50 @@ class SingleSelectItem(
         fun bind(model: SingleSelectItemDomain, position: Int) {
             try {
                 viewBinding.apply {
+                    val title = model.title
+                    tvTitle.text = title
+//                    if (!searchQuery.isNullOrBlank()) {
+//                        title.apply {
+//                            val spannable   = SpannableString(this)
+//                            val startPos    = this.lowercase().indexOf(searchQuery.toString().lowercase())
+//                            val endPos      = startPos + searchQuery.toString().length
+//                            val spanColor   = ColorStateList(arrayOf(intArrayOf()), intArrayOf(ContextCompat.getColor(root.context, R.color.colorPrimary)))
+//                            val highlight   = TextAppearanceSpan(null, Typeface.BOLD, -1, spanColor, null)
+//
+//                            spannable.setSpan(
+//                                highlight,
+//                                startPos,
+//                                endPos,
+//                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//                            )
+//                            tvTitle.text = spannable
+//                        }
+//                    } else tvTitle.text = title
+
+                    tvMessage.visibility = View.GONE
                     val message = model.message
-                    if (!searchQuery.isNullOrBlank()) {
-                        val spannable = SpannableString(message)
-                        val endLength: Int = message.lowercase()
-                            .indexOf(searchQuery.toString()) + searchQuery.toString().length
-                        val highlightedColor = ColorStateList(
-                            arrayOf(intArrayOf()),
-                            intArrayOf(ContextCompat.getColor(this.root.context, R.color.black))
-                        )
-                        val textAppearanceSpan =
-                            TextAppearanceSpan(null, Typeface.NORMAL, -1, highlightedColor, null)
-                        spannable.setSpan(
-                            textAppearanceSpan,
-                            message.lowercase().indexOf(searchQuery.toString()),
-                            endLength,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                        tvItem.text = spannable
-                    } else tvItem.text = message
+                    if (!message.isNullOrBlank()) {
+                        tvMessage.visibility = View.VISIBLE
+                        tvMessage.text = message
+
+//                        if (!searchQuery.isNullOrBlank()) {
+//                            message.apply {
+//                                val spannable   = SpannableString(this)
+//                                val startPos    = this.lowercase().indexOf(searchQuery.toString().lowercase())
+//                                val endPos      = startPos + searchQuery.toString().length
+//                                val spanColor   = ColorStateList(arrayOf(intArrayOf()), intArrayOf(ContextCompat.getColor(root.context, R.color.colorPrimary)))
+//                                val highlight   = TextAppearanceSpan(null, Typeface.BOLD, -1, spanColor, null)
+//
+//                                spannable.setSpan(
+//                                    highlight,
+//                                    startPos,
+//                                    endPos,
+//                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//                                )
+//                                tvMessage.text = spannable
+//                            }
+//                        } else tvMessage.text = message
+                    }
 
                     item.setOnClickListener {
                         listener.invoke(position, model)
@@ -75,11 +94,9 @@ class SingleSelectItem(
 
     fun setItems(items: MutableList<SingleSelectItemDomain>, searchQuery: String? = null) {
         this.searchQuery = searchQuery
-        listDataTemp.clear()
         listData.clear()
 
-        listDataTemp.addAll(items)
-        listData.addAll(listDataTemp)
+        listData.addAll(items)
         notifyDataSetChanged()
     }
 }

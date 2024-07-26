@@ -21,4 +21,20 @@
         <item name="rippleColor">@color/grey_200</item>
         <item name="cornerRadius">@dimen/_10sdp</item>
     </style>
+
+    <style name="MyDenseOutlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="materialThemeOverlay">@style/MyThemeOverlayOutlinedDense</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_20sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_20sdp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_20sdp</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/_20sdp</item>
+    </style>
+    <style name="MyThemeOverlayOutlinedDense">
+        <item name="editTextStyle">@style/MyTextInputEditText_outlinedBox_dense_h</item>
+    </style>
+    <style name="MyTextInputEditText_outlinedBox_dense_h" parent="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense">
+        <item name="android:paddingTop">@dimen/_10sdp</item>
+        <item name="android:paddingBottom">@dimen/_10sdp</item>
+    </style>
 </resources>

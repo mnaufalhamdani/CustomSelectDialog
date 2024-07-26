@@ -3,88 +3,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
-    android:paddingBottom="@dimen/_10sdp">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        android:fontFamily="@font/nunitosans_regular"
-        android:text="@string/app_name"
-        android:textColor="@color/grey_700"
-        android:textSize="@dimen/_14sdp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etSearch"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_below="@id/tvTitle"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:background="@color/white"
-        android:drawableStart="@drawable/ic_xml_search"
-        android:fontFamily="@font/nunitosans_regular"
-        android:inputType="textPersonName"
-        android:padding="@dimen/_2sdp"
-        android:textColor="@color/grey_600"
-        app:drawableTint="@color/grey_600" />
-
-    <View
-        android:id="@+id/viewSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_below="@id/etSearch"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:background="@color/grey_300" />
-
-    <View
-        android:id="@+id/viewDivider"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_below="@id/viewSearch"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@color/grey_400" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/viewDividerEmpty"
-        android:layout_below="@id/viewDivider"
-        android:background="@color/white"
-        android:nestedScrollingEnabled="false"
-        android:overScrollMode="never"
-        tools:listitem="@layout/item_single_select" />
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_3sdp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp">
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:fontFamily="@font/nunitosans_bold"
+                android:text="@string/app_name"
+                android:textColor="@color/grey_700"
+                android:textSize="@dimen/_14sdp" />
 
-    <View
-        android:id="@+id/viewDividerEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_above="@id/tvReset"
-        android:background="@color/grey_700"
-        android:visibility="gone" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lytSearch"
+                style="@style/MyDenseOutlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:textColorHint="@color/grey_500"
+                app:boxBackgroundColor="@color/grey_200"
+                app:endIconMode="clear_text"
+                app:boxStrokeWidth="0dp">
 
-    <TextView
-        android:id="@+id/tvReset"
-        style="@style/ViewIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="end"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/nunitosans_bold"
-        android:padding="@dimen/_10sdp"
-        android:text="@string/reset"
-        android:textColor="@color/grey_600"
-        android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunitosans_regular"
+                    android:hint="@string/search_hint"
+                    android:drawableStart="@drawable/ic_xml_search"
+                    android:inputType="textCapSentences"
+                    android:singleLine="true"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/grey_700"
+                    app:drawableTint="@color/grey_700"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    tools:listitem="@layout/item_single_select" />
+
+                <FrameLayout
+                    android:id="@+id/lytError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    tools:visibility="gone">
+                    <include layout="@layout/lyt_error"/>
+                </FrameLayout>
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_bold"
+                android:padding="@dimen/_7sdp"
+                android:text="@string/reset"
+                android:textAllCaps="false"
+                android:layout_gravity="end"
+                android:textColor="@color/grey_100"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:backgroundTint="@color/red_A700"
+                app:cornerRadius="@dimen/_20sdp"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

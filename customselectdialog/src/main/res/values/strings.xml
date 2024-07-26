@@ -2,7 +2,9 @@
     <string name="app_name">CustomSelectDialog</string>
     <string name="base_btn_ok">OK</string>
     <string name="base_btn_cancel">Cancel</string>
-    <string name="example_short">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="example_short">Lorem Ipsum is simply dummy text of the printing and type setting industry.</string>
     <string name="reset">Reset</string>
     <string name="save">Simpan</string>
+    <string name="search_hint">Cari Sesuatu. . .</string>
+    <string name="base_error_no_data">Data tidak ditemukan</string>
 </resources>
