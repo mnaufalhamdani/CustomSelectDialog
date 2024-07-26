@@ -84,7 +84,7 @@ class SingleSelectDialog(context: Context) : AppCompatDialog(context) {
         }
 
         if (isHiddenSearch) {
-            binding.etSearch.visibility = View.GONE
+            binding.lytSearch.visibility = View.GONE
         }
 
         if (listItem.isNotEmpty()) {

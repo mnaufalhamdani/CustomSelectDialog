@@ -46,6 +46,7 @@
                     android:drawableStart="@drawable/ic_xml_search"
                     android:inputType="textCapSentences"
                     android:singleLine="true"
+                    android:imeOptions="actionDone"
                     android:textSize="@dimen/_11sdp"
                     android:textColor="@color/grey_700"
                     app:drawableTint="@color/grey_700"/>
