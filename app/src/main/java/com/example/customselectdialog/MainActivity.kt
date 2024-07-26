@@ -15,9 +15,12 @@ class MainActivity : AppCompatActivity() {
     val listItemMultiple: MutableList<MultipleSelectItemDomain> = mutableListOf()
     val listItemSelected: MutableList<String> = mutableListOf()
     val items = listOf(
-        "Indonesia", "Singapore", "Malaysia", "Philipine", "Myanmar", "Thailand", "Kamboja",
+        "Indonesia", "Singapore", "Malaysia", "Philipine", "Myanmar",
+        "Thailand", "Kamboja",
         "Brunei", "Vietnam", "Australia", "Timor Leste", "Hongkong"
     )
+
+    val message = "Yuk kita jalan-jalan. Jangan lupa persiapkan barang-barang yang akan dibawa \nDan jangan lupa untuk membawa bekal"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         items.mapIndexed { index, item ->
-            listItemMultiple.add(MultipleSelectItemDomain(index.toString(), item))
+            listItemMultiple.add(MultipleSelectItemDomain(index.toString(), item, message))
             if (index % 2 == 0) listItemSelected.add(index.toString())
         }
 
@@ -42,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 .setCancelButton(true)
                 .start(object : SingleSelectDialog.SubmitCallbackListener{
                     override fun onSelected(item: SingleSelectItemDomain) {
-                        binding.tvResult.text = item.message
+                        binding.tvResult.text = item.title
                     }
                     override fun onReset() {
                         binding.tvResult.text = ""
@@ -64,9 +67,9 @@ class MainActivity : AppCompatActivity() {
                     override fun onSelected(
                         items: List<MultipleSelectItemDomain>,
                         codeOrId: String,
-                        message: String
+                        result: String
                     ) {
-                        binding.tvResult.text = message
+                        binding.tvResult.text = result
                     }
 
                     override fun onReset() {

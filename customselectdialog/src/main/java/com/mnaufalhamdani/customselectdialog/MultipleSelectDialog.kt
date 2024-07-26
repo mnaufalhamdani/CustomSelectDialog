@@ -2,7 +2,9 @@ package com.mnaufalhamdani.customselectdialog
 
 import android.app.Dialog
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.widget.doAfterTextChanged
@@ -71,42 +73,42 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
     private fun showDialog() {
         if (dialog == null) dialog = Dialog(context)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        binding = LytMultipleSelectBinding.inflate(layoutInflater)
+        binding = LytMultipleSelectBinding.inflate(LayoutInflater.from(context))
         dialog?.setContentView(binding.root)
         dialog?.setCancelable(isCancel)
         dialog?.setCanceledOnTouchOutside(false)
+        dialog?.window?.setBackgroundDrawableResource(R.color.transparent)
         dialog?.show()
 
         binding.tvTitle.text = title
 
-        binding.tvReset.setOnClickListener {
+        binding.btnReset.setOnClickListener {
             callback.onReset()
             hideDialog()
         }
 
-        binding.tvSave.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             val listData = _itemAdapter.getDataChecked()
             if (listData.isEmpty())
                 callback.onError("Please Choose Item")
             else {
                 var codeOrId = ""
-                var message = ""
+                var title = ""
                 listData.map {
                     codeOrId += "${it.codeOrId},"
-                    message += "${it.message}, "
+                    title += "${it.title}, "
                 }
                 callback.onSelected(
                     listData,
                     codeOrId.substring(0, codeOrId.length - 1).trim(),
-                    message.substring(0, message.length - 2)
+                    title.substring(0, title.length - 2)
                 )
                 hideDialog()
             }
         }
 
         if (isHiddenSearch) {
-            binding.etSearch.visibility = View.GONE
-            binding.viewSearch.visibility = View.GONE
+            binding.lytSearch.visibility = View.GONE
         }
 
         if (isHiddenSelectAll) {
@@ -127,8 +129,10 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
                     listItemSearch.addAll(listItem)
                 } else {
                     listItem.mapIndexed { _, it ->
-                        if (it.message.lowercase().trim()
+                        if (it.title.lowercase().trim()
                                 .contains(search.toString().lowercase().trim())
+                            || it.message?.lowercase()?.trim()
+                                ?.contains(search.toString().lowercase().trim()) == true
                         ) {
                             listItemSearch.add(it)
                         }
@@ -140,9 +144,13 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
 
                 if (listItemSearch.isNotEmpty()) {
                     binding.lytSelectAll.visibility = View.VISIBLE
+                    binding.recycler.visibility = View.VISIBLE
+                    binding.lytError.visibility = View.GONE
                     setCheckBox(!_itemAdapter.getDataShowing().any { !it.isChecked })
                 } else {
                     binding.lytSelectAll.visibility = View.GONE
+                    binding.recycler.visibility = View.GONE
+                    binding.lytError.visibility = View.VISIBLE
                 }
 
             }
@@ -152,6 +160,10 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
     }
 
     private fun setUpData() {
+        val sizeScreen = context.resources.displayMetrics
+        val maxHeight = sizeScreen.heightPixels / 2
+        val heightSpan = if (listItem.size > 4) maxHeight else ViewGroup.LayoutParams.WRAP_CONTENT
+
         listItem.mapIndexed { index, domain ->
             domain.index = index
             domain.isChecked = false
@@ -163,6 +175,10 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
         setCheckBox(!listItem.any { !it.isChecked })
 
         binding.recycler.apply {
+            val sizeRecycler = this.layoutParams
+            sizeRecycler.height = heightSpan
+            this.layoutParams = sizeRecycler
+
             hasFixedSize()
             layoutManager = LinearLayoutManager(binding.root.context)
             _itemAdapter.setItems(listItem)
@@ -190,7 +206,7 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
     }
 
     interface SubmitCallbackListener {
-        fun onSelected(items: List<MultipleSelectItemDomain>, codeOrId: String, message: String)
+        fun onSelected(items: List<MultipleSelectItemDomain>, codeOrId: String, result: String)
         fun onReset()
         fun onError(message: String)
     }
