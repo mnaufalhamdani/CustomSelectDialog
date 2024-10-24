@@ -8,7 +8,7 @@ Custom Select Dialog is a dialog for selecting certain items that have been set,
 # Preview
    Main Sample    |  Single Select Dialog  |  Multiple Select Dialog  |
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/mnaufalhamdani/CustomSelectDialog/blob/master/image/photo_2023-03-23_12-04-51.jpg)  |  ![](https://github.com/mnaufalhamdani/CustomSelectDialog/blob/master/image/photo_2023-03-23_12-04-56.jpg)  |  ![](https://github.com/mnaufalhamdani/CustomSelectDialog/blob/master/image/photo_2023-03-23_12-04-59.jpg)
+![](https://github.com/mnaufalhamdani/CustomSelectDialog/blob/master/image/photo_2023-03-23_12-04-51.jpg)  |  ![](https://github.com/mnaufalhamdani/CustomSelectDialog/blob/master/image/Screenshot_2024-10-24-14-20-39-97.jpg)  |  ![](https://github.com/mnaufalhamdani/CustomSelectDialog/blob/master/image/Screenshot_2024-10-24-14-20-57-83.jpg)
 
 # Usage
 
@@ -57,7 +57,7 @@ Custom Select Dialog is a dialog for selecting certain items that have been set,
           .setCancelButton(true)                //set enable cancel button (default true)
           .start(object : SingleSelectDialog.SubmitCallbackListener{
               override fun onSelected(item: SingleSelectItemDomain) {
-                  binding.tvResult.text = item.message
+                  binding.tvResult.text = item.title
               }
               override fun onReset() {
                   binding.tvResult.text = ""
@@ -75,6 +75,7 @@ Custom Select Dialog is a dialog for selecting certain items that have been set,
 	**Kotlin**
 
 	```kotlin
+    val message = "Yuk kita jalan-jalan. Jangan lupa persiapkan barang-barang yang akan dibawa \nDan jangan lupa untuk membawa bekal"
     val listItemMultiple: MutableList<MultipleSelectItemDomain> = mutableListOf()
     val listItemSelected: MutableList<String> = mutableListOf()
     val items = listOf(
@@ -82,7 +83,7 @@ Custom Select Dialog is a dialog for selecting certain items that have been set,
         "Brunei", "Vietnam", "Australia", "Timor Leste", "Hongkong"
     )
     items.mapIndexed { index, item ->
-        listItemMultiple.add(MultipleSelectItemDomain(index.toString(), item))
+        listItemMultiple.add(MultipleSelectItemDomain(index.toString(), item, message))
         if (index % 2 == 0) listItemSelected.add(index.toString())
     }
     ```
@@ -102,9 +103,9 @@ Custom Select Dialog is a dialog for selecting certain items that have been set,
               override fun onSelected(
                   items: List<MultipleSelectItemDomain>,
                   codeOrId: String,
-                  message: String
+                  result: String
               ) {
-                  binding.tvResult.text = message
+                  binding.tvResult.text = result
               }
 
               override fun onReset() {
@@ -119,7 +120,7 @@ Custom Select Dialog is a dialog for selecting certain items that have been set,
 
 ## License
 
-    Copyright 2023, mnaufalhamdani
+    Copyright 2024, mnaufalhamdani
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
