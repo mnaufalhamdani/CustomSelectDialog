@@ -14,7 +14,8 @@ class MultipleSelectItem(
     val listener: (position: Int, model: MultipleSelectItemDomain) -> Unit
 ) : RecyclerView.Adapter<MultipleSelectItem.MyViewHolder>() {
 
-    private val listData: MutableList<MultipleSelectItemDomain> = mutableListOf()
+    private val listData: MutableList<MultipleSelectItemDomain> = mutableListOf()//default
+    private val listDataShowing: MutableList<MultipleSelectItemDomain> = mutableListOf()//by filter
     private var searchQuery: String? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -24,11 +25,11 @@ class MultipleSelectItem(
     }
 
     override fun getItemCount(): Int {
-        return listData.size
+        return listDataShowing.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(listData[position], position)
+        holder.bind(listDataShowing[position], position)
     }
 
     inner class MyViewHolder(private val viewBinding: ItemMultipleSelectBinding) :
@@ -98,7 +99,9 @@ class MultipleSelectItem(
     fun setItems(items: MutableList<MultipleSelectItemDomain>, searchQuery: String? = null) {
         this.searchQuery = searchQuery
         listData.clear()
+        listDataShowing.clear()
         listData.addAll(items)
+        listDataShowing.addAll(items)
         notifyDataSetChanged()
     }
 
@@ -108,10 +111,13 @@ class MultipleSelectItem(
             listData.find { temp -> item.codeOrId == temp.codeOrId }?.let { domain ->
                 item.isChecked = domain.isChecked
             }
+            listDataShowing.find { temp -> item.codeOrId == temp.codeOrId }?.let { domain ->
+                item.isChecked = domain.isChecked
+            }
             item
         }
-        listData.clear()
-        listData.addAll(items)
+        listDataShowing.clear()
+        listDataShowing.addAll(items)
         notifyDataSetChanged()
     }
 
@@ -121,8 +127,20 @@ class MultipleSelectItem(
             data
         }
 
+        listDataShowing.map { data ->
+            data.isChecked = isChecked
+            data
+        }
+
         listData.map { temp ->
             listData.find { data -> temp.codeOrId == data.codeOrId }?.let {
+                temp.isChecked = it.isChecked
+            }
+            temp
+        }
+
+        listDataShowing.map { temp ->
+            listDataShowing.find { data -> temp.codeOrId == data.codeOrId }?.let {
                 temp.isChecked = it.isChecked
             }
             temp
@@ -137,6 +155,12 @@ class MultipleSelectItem(
                 temp.isChecked = domain.isChecked
             temp
         }
+
+        listDataShowing.map { temp ->
+            if (temp.codeOrId == domain.codeOrId)
+                temp.isChecked = domain.isChecked
+            temp
+        }
     }
 
     fun getDataChecked(): List<MultipleSelectItemDomain> {
@@ -144,6 +168,6 @@ class MultipleSelectItem(
     }
 
     fun getDataShowing(): List<MultipleSelectItemDomain> {
-        return listData.toList()
+        return listDataShowing.toList()
     }
 }
