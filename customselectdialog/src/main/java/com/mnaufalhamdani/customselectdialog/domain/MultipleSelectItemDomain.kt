@@ -6,4 +6,5 @@ data class MultipleSelectItemDomain(
     var message: String? = null,
     var index: Int = 0,//updated on Adapter
     var isChecked: Boolean = false,//updated on Adapter
+    var timeChecked: Long = System.currentTimeMillis(),
 )
