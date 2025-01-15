@@ -110,9 +110,11 @@ class MultipleSelectItem(
         items.map { item ->
             listData.find { temp -> item.codeOrId == temp.codeOrId }?.let { domain ->
                 item.isChecked = domain.isChecked
+                item.timeChecked = System.currentTimeMillis()
             }
             listDataShowing.find { temp -> item.codeOrId == temp.codeOrId }?.let { domain ->
                 item.isChecked = domain.isChecked
+                item.timeChecked = System.currentTimeMillis()
             }
             item
         }
@@ -122,49 +124,43 @@ class MultipleSelectItem(
     }
 
     fun updateAllChecked(isChecked: Boolean) {
-        listData.map { data ->
-            data.isChecked = isChecked
-            data
-        }
-
         listDataShowing.map { data ->
             data.isChecked = isChecked
+            data.timeChecked = System.currentTimeMillis()
             data
         }
 
-        listData.map { temp ->
-            listData.find { data -> temp.codeOrId == data.codeOrId }?.let {
-                temp.isChecked = it.isChecked
+        listData.map { all ->
+            listDataShowing.find { data -> all.codeOrId == data.codeOrId }?.let {
+                all.isChecked = it.isChecked
+                all.timeChecked = System.currentTimeMillis()
             }
-            temp
-        }
-
-        listDataShowing.map { temp ->
-            listDataShowing.find { data -> temp.codeOrId == data.codeOrId }?.let {
-                temp.isChecked = it.isChecked
-            }
-            temp
+            all
         }
 
         notifyDataSetChanged()
     }
 
     fun updateChecked(domain: MultipleSelectItemDomain) {
-        listData.map { temp ->
-            if (temp.codeOrId == domain.codeOrId)
-                temp.isChecked = domain.isChecked
-            temp
+        listData.map { all ->
+            if (all.codeOrId == domain.codeOrId){
+                all.isChecked = domain.isChecked
+                all.timeChecked = System.currentTimeMillis()
+            }
+            all
         }
 
         listDataShowing.map { temp ->
-            if (temp.codeOrId == domain.codeOrId)
+            if (temp.codeOrId == domain.codeOrId){
                 temp.isChecked = domain.isChecked
+                temp.timeChecked = System.currentTimeMillis()
+            }
             temp
         }
     }
 
     fun getDataChecked(): List<MultipleSelectItemDomain> {
-        return listData.filter { it.isChecked }
+        return listData.filter { it.isChecked }.sortedBy { it.timeChecked }
     }
 
     fun getDataShowing(): List<MultipleSelectItemDomain> {
