@@ -39,7 +39,6 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:fontFamily="@font/nunitosans_bold"
-                    android:lines="1"
                     tools:text="@string/example_short"
                     android:textColor="@color/grey_700"
                     android:textSize="@dimen/_11sdp"
@@ -62,6 +61,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginTop="@dimen/_10sdp"
