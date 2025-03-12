@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/_10sdp"
-            android:maxLines="3"
             android:textColor="@color/grey_700"
             android:textSize="@dimen/_10sdp"
             android:visibility="gone"
