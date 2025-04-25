@@ -8,4 +8,5 @@
     <string name="search_hint">Cari Sesuatu. . .</string>
     <string name="base_error_no_data">Data tidak ditemukan</string>
     <string name="select_all">Select All</string>
+    <string name="pilih_semua">Pilih Semua</string>
 </resources>

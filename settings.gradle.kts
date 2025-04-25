@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CustomSelectDialog"
-include ':app'
-include ':customselectdialog'
+include(":app")
+include(":customselectdialog")
