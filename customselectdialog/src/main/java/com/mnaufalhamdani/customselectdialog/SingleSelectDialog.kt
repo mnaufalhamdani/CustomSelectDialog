@@ -9,10 +9,10 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.mnaufalhamdani.customselectdialog.adapter.SingleSelectItem
 import com.mnaufalhamdani.customselectdialog.databinding.LytSingleSelectBinding
 import com.mnaufalhamdani.customselectdialog.domain.SingleSelectItemDomain
-
 
 class SingleSelectDialog(context: Context) : AppCompatDialog(context) {
     private lateinit var binding: LytSingleSelectBinding
@@ -132,6 +132,10 @@ class SingleSelectDialog(context: Context) : AppCompatDialog(context) {
                 }else{
                     binding.recycler.visibility = View.GONE
                     binding.lytError.visibility = View.VISIBLE
+                    Glide.with(binding.root.context)
+                        .load(R.drawable.img_anim_no_data)
+                        .error(R.drawable.img_anim_no_data)
+                        .into(binding.incError.imgError)
                 }
             }
         } else {

@@ -46,6 +46,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //Dimen
     implementation(libs.sdp)
+    //Glide
+    implementation(libs.glide)
 }
 
 afterEvaluate {

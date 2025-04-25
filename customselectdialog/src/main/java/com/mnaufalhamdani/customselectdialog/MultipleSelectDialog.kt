@@ -9,6 +9,7 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.mnaufalhamdani.customselectdialog.adapter.MultipleSelectItem
 import com.mnaufalhamdani.customselectdialog.databinding.LytMultipleSelectBinding
 import com.mnaufalhamdani.customselectdialog.domain.MultipleSelectItemDomain
@@ -151,6 +152,10 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
                     binding.lytSelectAll.visibility = View.GONE
                     binding.recycler.visibility = View.GONE
                     binding.lytError.visibility = View.VISIBLE
+                    Glide.with(binding.root.context)
+                        .load(R.drawable.img_anim_no_data)
+                        .error(R.drawable.img_anim_no_data)
+                        .into(binding.incError.imgError)
                 }
 
             }
