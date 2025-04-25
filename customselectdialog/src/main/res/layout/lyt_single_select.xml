@@ -64,6 +64,18 @@
                     android:overScrollMode="never"
                     tools:listitem="@layout/item_single_select" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
+                    android:rotation="180"
+                    android:background="@drawable/shape_gradient_white"
+                    android:layout_alignTop="@id/recycler"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
+                    android:background="@drawable/shape_gradient_white"
+                    android:layout_alignBottom="@id/recycler"/>
+
                 <FrameLayout
                     android:id="@+id/lytError"
                     android:layout_width="match_parent"
@@ -71,7 +83,9 @@
                     android:background="@color/white"
                     android:visibility="gone"
                     tools:visibility="gone">
-                    <include layout="@layout/lyt_error"/>
+                    <include
+                        android:id="@+id/inc_error"
+                        layout="@layout/lyt_error"/>
                 </FrameLayout>
             </RelativeLayout>
 
