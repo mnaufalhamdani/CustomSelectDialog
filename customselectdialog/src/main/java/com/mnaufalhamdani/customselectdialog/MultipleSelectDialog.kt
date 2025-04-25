@@ -189,7 +189,7 @@ class MultipleSelectDialog(context: Context) : AppCompatDialog(context) {
     private fun setCheckBox(isChecked: Boolean) {
         binding.checkBox.isChecked = isChecked
         binding.tvCheckBox.text =
-            if (binding.checkBox.isChecked) "Deselect All" else "Select All"
+            if (binding.checkBox.isChecked) "Hilangkan Semua Pilihan" else "Pilih Semua"
     }
 
     private val _itemAdapter by lazy {

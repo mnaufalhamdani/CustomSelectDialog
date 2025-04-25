@@ -84,10 +84,10 @@ class MultipleSelectItem(
 //                        } else tvMessage.text = message
                     }
 
-                    view.visibility = View.VISIBLE
-                    if (position == (listData.size - 1)){
-                        view.visibility = View.INVISIBLE
-                    }
+//                    view.visibility = View.VISIBLE
+//                    if (position == (listData.size - 1)){
+//                        view.visibility = View.INVISIBLE
+//                    }
                     item.setOnClickListener {
                         checkBox.isChecked = !checkBox.isChecked
                         model.isChecked = checkBox.isChecked

@@ -53,16 +53,21 @@
                     app:drawableTint="@color/grey_700"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/lytSelectAll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/grey_200"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@null">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
@@ -81,16 +86,11 @@
                         android:fontFamily="@font/nunitosans_bold"
                         android:gravity="end"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/select_all"
+                        android:text="@string/pilih_semua"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@color/grey_300" />
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
